@@ -1,15 +1,24 @@
-body {
-  background-color: white;
+#teamTitle {
+	text-align: center;
+	font-family: Arial;
 }
 
-.button {
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
+#teamLogo {
+	display: block;
+	width: 25%;
+	margin: auto;
+}
+#teamMenu {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	margin: auto;
+	height: 350px;
+}
+#teamDescription{
+	text-align: center;
+}
+.profilePic{
+	width: 15%;
+	object-fit: scale-down;
 }
