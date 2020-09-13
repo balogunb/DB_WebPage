@@ -21,9 +21,9 @@ function setPictures(elem){
 	profiles.forEach(
 		function(currentValue){
 			if (currentValue == elem){
-				currentValue.src = `media/index/${currentValue.id.match(personName)[1].toLowerCase()}2.png`;
+				currentValue.src = `\"media/index/${currentValue.id.match(personName)[1].toLowerCase()}2.png\"`;
 			} else {
-				currentValue.src = `media/index/${currentValue.id.match(personName)[1].toLowerCase()}1.png`;
+				currentValue.src = `\"media/index/${currentValue.id.match(personName)[1].toLowerCase()}1.png\"`;
 			}
 		});
 }
@@ -46,7 +46,7 @@ document.getElementById("teamLogo").addEventListener("click", function() {
 	let profiles = document.querySelectorAll('.profilePic');
 	profiles.forEach(
 		function(currentValue){
-			currentValue.src = `media/index/${currentValue.id.match(personName)[1].toLowerCase()}1.png`;
+			currentValue.src = `\"media/index/${currentValue.id.match(personName)[1].toLowerCase()}1.png\"`;
 		});
 })
 //set the initial value of the description on page load
