@@ -12,7 +12,7 @@ let descriptions = new Map();
 descriptions.set("default", "Click on a team member's image to see their description, or on the ducks to reset!")
 descriptions.set("Ed", "Ed's description");
 descriptions.set("Chloe", "Hi I'm Chloe, I am a junior CS major with a math minor. I like ducks.");
-descriptions.set("Basit", "Basit's description");
+descriptions.set("Basit", "Hello, If you do not already know my my name is Basit and I am computer science major at lafayette college. I do not like ducks very much.");
 descriptions.set("Seth", "Hi, I'm Seth. I am a junior studying Computer Science and Math. I'm just here winging it.");
 descriptions.set("Matt", "Matt's description");
 
