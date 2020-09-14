@@ -12,7 +12,7 @@ descriptions.set("default", "Click on a team member's image to see their descrip
 descriptions.set("Ed", "Ed's description");
 descriptions.set("Chloe", "Hi I'm Chloe, I am a junior CS major with a math minor. I like ducks.");
 descriptions.set("Basit", "Basit's description");
-descriptions.set("Seth", "Seth's description");
+descriptions.set("Seth", "Hi, I'm Seth. I am a junior studying Computer Science and Math. I'm just here winging it");
 descriptions.set("Matt", "Matt's description");
 
 //sets everyone's pictures to the correct image when one is clicked
