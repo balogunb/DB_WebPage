@@ -48,7 +48,6 @@ for (const member of teamMembers){
 	document.getElementById(`pic${member}`).addEventListener("click", async function() {
 
 		setPictures(document.getElementById(`pic${member}`));
-		teamDescription.innerHTML = descriptions.get(member);
 		// dog photo json url: https://dog.ceo/api/breed/INSERT BREED HERE/images/random
 		breed = dogBreeds.get(member);
 		breedURL = "https://dog.ceo/api/breed/" + breed + "/images/random"
@@ -58,6 +57,7 @@ for (const member of teamMembers){
 
 		dogPhoto.onload = (event ) => {
 		    dogPhotoURL.innerHTML = msg;
+		    teamDescription.innerHTML = descriptions.get(member);
 		}
 
 	});
