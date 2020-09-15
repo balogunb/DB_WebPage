@@ -10,7 +10,7 @@ let dogPhotoBox = document.getElementById("dogPhoto");
 
 let descriptions = new Map();
 descriptions.set("default", "Click on a team member's image to see their description, or on the ducks to reset!")
-descriptions.set("Ed", "Ed's description");
+descriptions.set("Ed", "Howdy!I'm Ed, a junior Neuroscience/CS student who is confused that Basit thinks he needs to specify what college he goes to. I'm a big fan of ducks because of their diversity - did you know ducks aren't actually monophyletic?");
 descriptions.set("Chloe", "Hi I'm Chloe, I am a junior CS major with a math minor. I like ducks.");
 descriptions.set("Basit", "Hello, If you do not already know my my name is Basit and I am computer science major at lafayette college. I do not like ducks very much.");
 descriptions.set("Seth", "Hi, I'm Seth. I am a junior studying Computer Science and Math. I'm just here winging it.");
