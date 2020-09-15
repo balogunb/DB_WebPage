@@ -77,6 +77,4 @@ document.getElementById("teamLogo").addEventListener("click", function() {
 	);
 })
 //set the initial value of the description on page load
-descriptionBox.innerHTML = descriptions.get("default")
-// set the initial value of dog box (temporary hopefully)
-dogPhotoBox.innerHTML = ""
+teamDescription.innerHTML = descriptions.get("default")
