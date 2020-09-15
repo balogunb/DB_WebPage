@@ -15,10 +15,18 @@
 	margin: auto;
 	height: 350px;
 }
-#teamDescription{
+
+
+#personalPic{
 	text-align: center;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
 .profilePic{
 	width: 15%;
 	object-fit: scale-down;
 }
+
+
