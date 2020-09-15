@@ -52,20 +52,28 @@ for (const member of teamMembers){
 		breed = dogBreeds.get(member);
 		breedURL = "https://dog.ceo/api/breed/" + breed + "/images/random"
 
-		let msg = await getMessage(breedURL);
-		dogPhoto.src = msg
 
+
+
+        teamDescription.innerHTML = descriptions.get(member);
+        dogPhotoURL.innerHTML = breedURL
+
+
+        /**
+        let msg = await getMessage(breedURL);
+		dogPhoto.src = msg
 		dogPhoto.onload = (event ) => {
 		    dogPhotoURL.innerHTML = msg;
 		    teamDescription.innerHTML = descriptions.get(member);
 		}
+		**/
 
 	});
 }
 
 //add listener to reset page when ducks are clicked
 document.getElementById("teamLogo").addEventListener("click", function() {
-	teamDescription.innerHTML = teamDescription.get("default")
+	teamDescription.innerHTML = descriptions.get("default")
 	dogPhotoURL.innerHTML = ""
 	dogPhoto.src = dogPhotoURL.innerHTML
 
