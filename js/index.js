@@ -51,8 +51,9 @@ for (const member of teamMembers){
 		// dog photo json url: https://dog.ceo/api/breed/INSERT BREED HERE/images/random
 		breed = dogBreeds.get(member);
 		breedURL = "https://dog.ceo/api/breed/" + breed + "/images/random"
-
-
+        teamDescription.innerHTML = ""
+        dogPhoto.src = ""
+        dogPhotoURL.innerHTML = ""
 
 
         //teamDescription.innerHTML = descriptions.get(member);
