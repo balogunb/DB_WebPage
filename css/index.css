@@ -1,32 +1,72 @@
+* {
+	font-family: Arial;
+}
+
 #teamTitle {
 	text-align: center;
-	font-family: Arial;
+	font-width: bold;
+	font-size: 5vh;
 }
 
 #teamLogo {
 	display: block;
-	width: 25%;
+	max-width: 90vh;
+	max-height: 25vh;
 	margin: auto;
+	margin-bottom: 5vh;
 }
+
 #teamMenu {
+	margin: 2.5%;
+	width: 95%;
 	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	margin: auto;
-	height: 350px;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+	align-items: flex-start;
 }
 
+.profile {
+	width: 18vw;
+	flex: 1, 1;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+}
 
-#personalPic{
-	text-align: center;
+.profilePic {
+	max-width: 18vw;
+	max-height: 20vh;
+}
+
+.profileText {
 	display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+	width: 100%;
+	color: black;
+	text-align: center;
+	font-size: 3vh;
 }
-.profilePic{
-	width: 15%;
-	object-fit: scale-down;
+
+#teamDescription {
+	display: block;
+	margin: auto;
+	align-self: : center;
 }
+
+#personalPic {
+	width: 100%;
+	flex: 1, 1;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+#dogPhoto {
+	max-width: 50vw;
+	max-height: 20vh;
+	margin: 1%;
+}
+
 
 
