@@ -5,8 +5,9 @@
 let personName = /pic([a-zA-z]+)/;
 
 
-let descriptionBox = document.getElementById("teamDescription");
-let dogPhotoBox = document.getElementById("dogPhoto");
+let teamDescription = document.getElementById("teamDescription");
+let dogPhoto = document.getElementById("dogPhoto");
+let dogPhotoURL = document.getElementById("dogPhotoURL");
 
 let descriptions = new Map();
 descriptions.set("default", "Click on a team member's image to see their description, or on the ducks to reset!")
@@ -14,7 +15,7 @@ descriptions.set("Ed", "Howdy!I'm Ed, a junior Neuroscience/CS student who is co
 descriptions.set("Chloe", "Hi I'm Chloe, I am a junior CS major with a math minor. I like ducks.");
 descriptions.set("Basit", "Hello, If you do not already know my my name is Basit and I am computer science major at lafayette college. I do not like ducks very much.");
 descriptions.set("Seth", "Hi, I'm Seth. I am a junior studying Computer Science and Math. I'm just here winging it.");
-descriptions.set("Matt", "Matt's description");
+descriptions.set("Matt", "What's up I'm Matthew. I am studying for a Computer Science major and a Math minor. All these ducks have me quacking up.");
 
 let dogBreeds = new Map();
 dogBreeds.set("Ed", "pug");
@@ -32,7 +33,8 @@ function setPictures(elem){
 			} else {
 				document.getElementById(currentValue.id).src = `media/index/${currentValue.id.match(personName)[1].toLowerCase()}1.png`;
 			}
-		});
+		}
+	);
 }
 
 
@@ -43,35 +45,32 @@ async function getMessage(breedURL){
     return data.message
 }
 
-    //for each team member, add a listener to change pictures and description on click
-    let teamMembers = ["Ed", "Matt", "Chloe", "Seth", "Basit"]
-    for (const member of teamMembers){
+//for each team member, add a listener to change pictures and description on click
+let teamMembers = ["Ed", "Matt", "Chloe", "Seth", "Basit"]
+for (const member of teamMembers){
 	document.getElementById(`pic${member}`).addEventListener("click", async function() {
 		setPictures(document.getElementById(`pic${member}`));
-		descriptionBox.innerHTML = descriptions.get(member);
+		teamDescription.innerHTML = descriptions.get(member);
 		// dog photo json url: https://dog.ceo/api/breed/INSERT BREED HERE/images/random
 		breed = dogBreeds.get(member);
 		breedURL = "https://dog.ceo/api/breed/" + breed + "/images/random"
-		dogPhotoBox.innerHTML = await getMessage(breedURL);
-		//fetch(breedURL);
-		document.getElementById('dogPhotoTest').src = dogPhotoBox.innerHTML
+		dogPhotoURL.innerHTML = await getMessage(breedURL);
+		dogPhoto.src = dogPhotoURL.innerHTML
 	});
-    }
-
-
-
-
+}
 
 //add listener to reset page when ducks are clicked
 document.getElementById("teamLogo").addEventListener("click", function() {
-	descriptionBox.innerHTML = descriptions.get("default")
-	dogPhotoBox.innerHTML = ""
+	teamDescription.innerHTML = teamDescription.get("default")
+	dogPhotoURL.innerHTML = ""
+	dogPhoto.src = dogPhotoURL.innerHTML
 
 	let profiles = document.querySelectorAll('.profilePic');
 	profiles.forEach(
 		function(currentValue){
 			document.getElementById(currentValue.id).src = `media/index/${currentValue.id.match(personName)[1].toLowerCase()}1.png`;
-		});
+		}
+	);
 })
 //set the initial value of the description on page load
 descriptionBox.innerHTML = descriptions.get("default")
