@@ -36,20 +36,31 @@ function setPictures(elem){
 }
 
 
+//Fetch the message from api
+async function getMessage(breedURL){
+    let response = await fetch(breedURL);
+    let data = await response.json()
+    return data.message
+}
 
-//for each team member, add a listener to change pictures and description on click
-let teamMembers = ["Ed", "Matt", "Chloe", "Seth", "Basit"]
-for (const member of teamMembers){
-	document.getElementById(`pic${member}`).addEventListener("click", function() { 
+    //for each team member, add a listener to change pictures and description on click
+    let teamMembers = ["Ed", "Matt", "Chloe", "Seth", "Basit"]
+    for (const member of teamMembers){
+	document.getElementById(`pic${member}`).addEventListener("click", async function() {
 		setPictures(document.getElementById(`pic${member}`));
 		descriptionBox.innerHTML = descriptions.get(member);
 		// dog photo json url: https://dog.ceo/api/breed/INSERT BREED HERE/images/random
 		breed = dogBreeds.get(member);
 		breedURL = "https://dog.ceo/api/breed/" + breed + "/images/random"
-		dogPhotoBox.innerHTML = breedURL;
+		dogPhotoBox.innerHTML = await getMessage(breedURL);
 		//fetch(breedURL);
+		document.getElementById('dogPhotoTest').src = dogPhotoBox.innerHTML
 	});
-}
+    }
+
+
+
+
 
 //add listener to reset page when ducks are clicked
 document.getElementById("teamLogo").addEventListener("click", function() {
