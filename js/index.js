@@ -1,6 +1,3 @@
-
-// function to replace [name1.png] with [name2.png]
-
 //regex to pull the person's name from an element id of the form "picName"
 let personName = /pic([a-zA-z]+)/;
 
@@ -47,7 +44,6 @@ async function getMessage(breedURL){
     let teamMembers = ["Ed", "Matt", "Chloe", "Seth", "Basit"]
     for (const member of teamMembers){
 	document.getElementById(`pic${member}`).addEventListener("click", async function() {
-		setPictures(document.getElementById(`pic${member}`));
 		descriptionBox.innerHTML = descriptions.get(member);
 		// dog photo json url: https://dog.ceo/api/breed/INSERT BREED HERE/images/random
 		breed = dogBreeds.get(member);
@@ -55,6 +51,7 @@ async function getMessage(breedURL){
 		dogPhotoBox.innerHTML = await getMessage(breedURL);
 		//fetch(breedURL);
 		document.getElementById('dogPhotoTest').src = dogPhotoBox.innerHTML
+		setPictures(document.getElementById(`pic${member}`));
 	});
     }
 
