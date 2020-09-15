@@ -21,7 +21,7 @@ dogBreeds.set("Ed", "pug");
 dogBreeds.set("Matt", "beagle");
 dogBreeds.set("Basit", "boxer");
 dogBreeds.set("Chloe", "weimaraner");
-dogBreeds.set("Seth", "husky");
+dogBreeds.set("Seth", "newfoundland");
 //sets everyone's pictures to the correct image when one is clicked
 function setPictures(elem){
 	let profiles = document.querySelectorAll('.profilePic');
