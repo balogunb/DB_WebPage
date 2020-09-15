@@ -55,18 +55,18 @@ for (const member of teamMembers){
 
 
 
-        teamDescription.innerHTML = descriptions.get(member);
-        dogPhotoURL.innerHTML = breedURL
+        //teamDescription.innerHTML = descriptions.get(member);
+        //dogPhotoURL.innerHTML = breedURL
 
 
-        /**
+        ///**
         let msg = await getMessage(breedURL);
 		dogPhoto.src = msg
 		dogPhoto.onload = (event ) => {
 		    dogPhotoURL.innerHTML = msg;
 		    teamDescription.innerHTML = descriptions.get(member);
 		}
-		**/
+		//**/
 
 	});
 }
