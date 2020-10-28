@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<script src="https://unpkg.com/vue@next"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
 
 <head>
 <meta charset="utf-8"/> 
@@ -6,38 +9,9 @@
 </head>
 
 <body>
-<h1 id="teamTitle"> DreamTeam</h1>
-<img id="teamLogo" src="media/index/several-ducks.jpg">
+<h1 id="teamTitle"> DreamTeam Dashboard</h1>
 
-<div id="teamMenu">
-	<div class="profile">
-		<a class="profileText" href = "http://139.147.9.186/carle/" target = "_self">Ed</a>
-		<img class="profilePic" id="picEd" src=media/index/ed1.png>
-	</div>
-	<div class="profile">
-		<a class="profileText" href = "http://139.147.9.186/sabatinm/" target = "_self">Matt</a>
-		<img class="profilePic" id="picMatt" src = media/index/matt1.png>
-	</div>
-	<div class="profile">
-		<a class="profileText" href = "http://139.147.9.186/balogunb/" target = "_self">Basit</a>
-		<img class="profilePic" id="picBasit" src = media/index/basit1.png>
-	</div>
-	<div class="profile">
-		<a class="profileText" href = "http://139.147.9.186/dorwardc/" target = "_self">Chloe</a>
-		<img class="profilePic" id="picChloe" src = media/index/chloe1.png>
-	</div>
-	<div class="profile">
-		<a class="profileText" href = "http://139.147.9.186/markaris/" target = "_self">Seth</a>
-		<img class="profilePic" id="picSeth" src = media/index/seth1.png>
-	</div>
-</div>
-
-<div id="teamDescription"> </div>
-
-<div id="personalPic">
-	<img id="dogPhoto">
-	<div id="dogPhotoURL"> </div>
-</div>
+<div id="ourChart"> </div>
 
 <script src="js/index.js" type="text/javascript"></script>
 </body>
