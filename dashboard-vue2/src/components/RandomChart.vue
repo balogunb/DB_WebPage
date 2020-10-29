@@ -1,7 +1,14 @@
 <template>
   <div class="small">
     <line-chart :chart-data="datacollection"></line-chart>
-    <button @click="fillData()">Randomize</button>
+    <!-- <button @click="fillData()">Randomize</button> -->
+    <select name="cars" id="cars">
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </select>
+
   </div>
 </template>
 
@@ -23,19 +30,19 @@
     methods: {
       fillData () {
         this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt()],
-          datasets: [
-            {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
+        labels: ['09/27/2020', '10/04/2020', '10/11/2020', '10/18/2020', '10/25/2020'],
+        datasets: [
+          {
+            label: 'Carbon County Cases',
+            backgroundColor: '#f87979',
+            data: [10, 31, 34, 29, 14]
             }, {
-              label: 'Data Two',
+              label: 'Carbon County Deaths',
               backgroundColor: '#f89779',
-              data: [this.getRandomInt(), this.getRandomInt()]
+              data: [0, 1, 0, 0, 0]
             }
-          ]
-        }
+            ]
+            }
       },
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
