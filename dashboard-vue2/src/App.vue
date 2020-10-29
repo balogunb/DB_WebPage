@@ -3,18 +3,17 @@
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <RandomChart :stack="false"></RandomChart>
-
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
 import RandomChart from './components/RandomChart.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    // HelloWorld,
     RandomChart
   }
 }
