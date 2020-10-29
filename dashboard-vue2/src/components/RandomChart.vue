@@ -30,8 +30,8 @@
               backgroundColor: '#f87979',
               data: [this.getRandomInt(), this.getRandomInt()]
             }, {
-              label: 'Data One',
-              backgroundColor: '#f87979',
+              label: 'Data Two',
+              backgroundColor: '#f89779',
               data: [this.getRandomInt(), this.getRandomInt()]
             }
           ]
