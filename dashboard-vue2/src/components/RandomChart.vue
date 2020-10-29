@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    <line-chart :chart-data="datacollection"></line-chart>
+    <line-chart :chart-data="datacollection" :options="opts"></line-chart>
     <button @click="fillData()">Randomize</button>
   </div>
 </template>
@@ -12,18 +12,28 @@
     components: {
       LineChart
     },
+    props: ['stack'],
     data () {
       return {
-        datacollection: null
+        datacollection: null,
+        opts: {
+          scales: {
+            yAxes: [{
+              stacked: false
+            }]
+          }
+        }
       }
     },
     mounted () {
+      this.opts.scales.yAxes[0].stacked = this.stack
       this.fillData()
+
     },
     methods: {
       fillData () {
         this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt()],
+          labels: ['this.getRandomInt()', 'this.getRandomInt()'],
           datasets: [
             {
               label: 'Data One',
