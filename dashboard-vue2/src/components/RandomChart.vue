@@ -1,7 +1,6 @@
 <template>
   <div class="small">
     <line-chart :chart-data="datacollection" :options="opts"></line-chart>
-    <button @click="fillData()">Randomize</button>
   </div>
 </template>
 
@@ -33,7 +32,6 @@
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
       }
     }
-  }
 </script>
 
 <style>
