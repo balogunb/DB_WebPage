@@ -24,14 +24,12 @@ export default {
           {
             label: 'Carbon County Cases',
             backgroundColor: '#f87979',
-            borderColor: '#f87979',
             data: [10, 31, 34, 29, 14],
             fill: false
             }, 
           {
             label: 'Carbon County Deaths',
             backgroundColor: '#f89779',
-            borderColor: '#f89779',
             data: [0, 1, 0, 0, 0],
             fill: false
             }
