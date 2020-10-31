@@ -5,6 +5,7 @@
 </template>
 
 <script>
+//  import Vue from 'vue'
   import LineChart from './LineChart.js'
 
   export default {
@@ -18,14 +19,11 @@
         opts: {
           scales: {
             yAxes: [{
-              stacked: false
+              stacked: this.stack
             }]
           }
         }
       }
-    },
-    mounted () {
-      this.opts.scales.yAxes[0].stacked = this.stack
     },
     methods: {
       getRandomInt () {

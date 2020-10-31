@@ -1,19 +1,17 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
     <RandomChart :customdata="chart1data" :stack="false"></RandomChart>
+    <RandomChart :customdata="chart2data" :stack="true"></RandomChart>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
 import RandomChart from './components/RandomChart.vue'
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld,
     RandomChart
   },
   data () {
@@ -36,7 +34,32 @@ export default {
             fill: false
             }
           ]
-        }
+        },
+      chart2data: {
+        labels: ['09/27/2020', '10/04/2020', '10/11/2020', '10/18/2020', '10/25/2020'],
+        datasets: [
+          {
+              label: 'Warren County Cases',
+              backgroundColor: '#f87979',
+              data: [1, 8, 7, 3, 2]
+            },
+          {
+              label: 'Northampton County Cases',
+              backgroundColor: '#f87979',
+              data: [78, 266, 202, 247, 72]
+            },
+          {
+              label: 'Lehigh County Cases',
+              backgroundColor: '#f87979',
+              data: [134, 210, 168, 267, 165]
+            },
+          {
+              label: 'Carbon County Cases',
+              backgroundColor: '#f87979',
+              data: [10, 31, 34, 29, 14]
+            }
+        ]
+      }
     }
   }
 }
