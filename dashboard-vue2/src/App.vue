@@ -52,17 +52,17 @@ export default {
             },
           {
               label: 'Northampton County Cases',
-              backgroundColor: '#f87979',
+              backgroundColor: '#f21979',
               data: [78, 266, 202, 247, 72]
             },
           {
               label: 'Lehigh County Cases',
-              backgroundColor: '#f87979',
+              backgroundColor: '#f8b979',
               data: [134, 210, 168, 267, 165]
             },
           {
               label: 'Carbon County Cases',
-              backgroundColor: '#f87979',
+              backgroundColor: '#f87000',
               data: [10, 31, 34, 29, 14]
             }
         ]
