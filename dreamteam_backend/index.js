@@ -83,6 +83,20 @@ app.get('/allcountydata', (req, res, next) => {
 })
 
 
+app.get('/countycolleges', (req, res, next) => { 
+    const county_name = req.query.county_name
+    console.log(county_name)
+
+    let queryStr = `
+        SELECT * FROM colleges where county_name =$1`  
+    pool.query(queryStr,[county_name]) 
+        .then(data => { 
+            console.log(data.rows); 
+            res.send(data.rows); 
+        }) 
+})
+
+
 app.get('/countydata', (req, res, next) => { 
     const county_name = req.query.county_name
     console.log(county_name)
