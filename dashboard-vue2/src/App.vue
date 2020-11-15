@@ -4,7 +4,7 @@
 		<HelloWorld msg="Welcome to Your Vue.js App"/>-->
 		<h1>DreamTeam Lehigh Valley COVID-19 Dashboard</h1>
 		<h2>Cases and Deaths (County)</h2>
-		<v-select :options="counties"> </v-select>
+		<v-select label="name" :options="counties" v-model="selected" :reduce="value => value.name"> </v-select>
 		<RandomChart :customdata="chart1data" :stack="false"></RandomChart>
 		<h2>Cases and Deaths (All Counties)</h2>
 		<RandomChart :customdata="chart2data" :stack="true"></RandomChart>
@@ -24,26 +24,9 @@ export default {
 	},
 	data () {
 		return {
-			counties: [],
-			chart1data: {
-				labels: ['09/27/2020', '10/04/2020', '10/11/2020', '10/18/2020', '10/25/2020'],
-				datasets: [
-					{
-						label: 'Carbon County Cases',
-						backgroundColor: '#f87979',
-						borderColor: '#f87979',
-						data: [10, 31, 34, 29, 14],
-						fill: false
-						}, 
-					{
-						label: 'Carbon County Deaths',
-						backgroundColor: '#f89779',
-						borderColor: '#f89779',
-						data: [0, 1, 0, 0, 0],
-						fill: false
-						}
-					]
-				},
+			selected: {}, //this is the object selected by the county drop-down.
+			counties: [], //the list of objects selectable by the county drop-down.
+			chart1data: {},
 			chart2data: {
 				labels: ['09/27/2020', '10/04/2020', '10/11/2020', '10/18/2020', '10/25/2020'],
 				datasets: [
@@ -124,8 +107,37 @@ export default {
 				}
 		}
 	},
+	watch: {
+		selected : function (newSelected) {
+			this.$http.get('http://139.147.9.191:80/countydata', {params: {county_name : newSelected}}).then(response => {
+				let data = {
+					labels: response.data.map( week => week.date.match(/[^T]*/i)[0]),
+					datasets: [
+						{
+							label: newSelected + " Deaths",
+							data: response.data.map( week => week.new_deaths),
+							backgroundColor: '#f87979',
+							borderColor: '#f87979',
+							fill: false
+							},
+						{
+							label: newSelected + " Cases",
+							data: response.data.map( week => week.new_cases),
+							backgroundColor: '#f21979',
+							borderColor: '#f21979',
+							fill: false
+							}	
+					]
+			}
+			this.chart1data = data
+			})
+		}
+	},
 	mounted () {
-		this.$http.get('http://139.147.9.191:80/counties').then(response => (this.counties = response.data.map(a => a.name)))
+		this.$http.get('http://139.147.9.191:80/counties').then(response => {
+			this.counties = response.data
+			this.selected = response.data[0].name //watcher loads data for this default value
+		})
 	}
 }
 </script>
