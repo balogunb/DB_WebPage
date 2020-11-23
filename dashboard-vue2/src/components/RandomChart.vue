@@ -63,8 +63,6 @@
 			}
 			if (this.displayFloats){
 				this.opts.tooltips.callbacks.label = function (tooltipItem, data) {
-				console.log(tooltipItem)
-				console.log(data)
 				return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].toFixed(3) + " per 1000"
 
 				}
