@@ -7,7 +7,7 @@
 		<v-select label="name" :clearable="false" :options="counties" v-model="selected" :reduce="value => value.name"> </v-select>
 		<RandomChart :customdata="chart1data" :stack="false"></RandomChart>
 		<h2>Cases (All Counties)</h2>
-		<RandomChart :customdata="chart2data" :displayAverage="true" :displayFloats="true" :stack="true" 	></RandomChart>
+		<RandomChart :customdata="chart2data" :displayAverage="false" :displayFloats="true" :stack="false" 	></RandomChart>
 		<h2>Cases by College in County </h2>
 		<RandomChart :customdata = "chart3data" :stack="false"></RandomChart>
 		<h2>Cases at All Colleges and Total Cases</h2>
@@ -121,10 +121,16 @@ export default {
 				let valleyTotalIncidence = []
 				let total = 0
 				let populationTotal = 0
-
-				for(let i = 0; i < this.countyPops.length; i++){
-					populationTotal += this.countyPops[i];
+				console.log("Population total loop: ")
+				console.log(this.countyPops)
+				console.log("Type thing")
+				console.log(typeof this.countyPops)
+				for(var i in this.countyPops){
+					populationTotal += this.countyPops[i]
+					console.log(this.countyPops[i])
 				}
+				console.log("Population total: ")
+				console.log(populationTotal)
 
 				for (let i = 0; i < counties[0].data.length; i++){
 					total = 0
@@ -144,8 +150,8 @@ export default {
 				let valleyIncidenceDataset = {
 					label: "Lehigh Valley Incidence",
 					data: valleyTotalIncidence,
-					backgroundColor: '#f27997',
-					borderColor: '#f27997',
+					backgroundColor: '#3D2B56',
+					borderColor: '#3D2B56',
 					fill: false
 				}
 
