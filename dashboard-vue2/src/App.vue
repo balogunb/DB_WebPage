@@ -14,7 +14,7 @@
 
 <script>
 import RandomChart from './components/RandomChart.vue'
-
+import randomColor from 'randomcolor'
 export default {
 	name: 'App',
 	components: {
@@ -32,7 +32,8 @@ export default {
 			chart1title: "Cases and Deaths (County)",
 			chart2title: "Cases (All Counties)",
 			chart3title: "Cases by College in County",
-			chart4title: "Cases at All Colleges and Total Cases"
+			chart4title: "Cases at All Colleges and Total Cases",
+			palette: {}
 		}
 	},
 	watch: {
@@ -68,14 +69,14 @@ export default {
 
 					this.$http.all(collegeRequests).then( colleges => {
 						// initially, countyCollegeDatasets contains a dataset for every college in the county. This can be an empty array at this point!
-						let countyCollegeDatasets = colleges.map(college => {
+						let countyCollegeDatasets = colleges.map((college, index) => {
 							//we need to pad out the left side of our dataset because college records don't extend as far back as county records
 							let alignedData = new Array(timestamps.length - college.data.length).fill(0).concat(college.data.map(week => week.new_cases))
 							return {
 								label: college.data[0].college_name,
 								data: alignedData,
-								backgroundColor: '#f87897',
-								borderColor: '#f87897',
+								backgroundColor: this.palette[index],
+								borderColor: this.palette[index],
 								fill: false
 							}
 						})
@@ -95,20 +96,20 @@ export default {
 			this.counties = response.data
 			this.countyPops = Object.assign({}, ...response.data.map(county => ({[county.name]: county.population})))
 			this.selected = response.data[0].name //watchers load county-specific data into charts 1 & 3 for this default value
+			this.palette = randomColor({count: this.counties.length, seed: 42})
 
-
-			let countyRequests = response.data.map(county => this.$http.get('http://139.147.9.191:80/countydata', {params: {county_name: county.name}}))
+			let countyRequests = response.data.map((county) => this.$http.get('http://139.147.9.191:80/countydata', {params: {county_name: county.name}}))
 			this.$http.all(countyRequests).then(counties => {
 				let timestamps = counties[0].data.map( week => week.date.match(/[^T]*/i)[0])
-				let countyIncidenceDatasets = counties.map(county => {
+				let countyIncidenceDatasets = counties.map((county, index) => {
 					return {
 						label: county.data[0].county_name,
 						data: county.data.map( week => {
 							console.log(week.new_cases / this.countyPops[week.county_name])
 							return (1000 * week.new_cases / this.countyPops[week.county_name])
 						}),
-						backgroundColor: '#f27997',
-						borderColor: '#f27997',
+						backgroundColor: this.palette[index ],
+						borderColor: this.palette[index],
 						fill: false
 					}
 
@@ -168,15 +169,15 @@ export default {
 				
 					this.$http.all(collegeRequests).then( colleges => {
 						//valleyCollegeDatasets contains a dataset for every college in the Lehigh Valley.
-						let valleyCollegeDatasets = colleges.map(college => {
+						let valleyCollegeDatasets = colleges.map((college, index) => {
 							//we need to pad out the left side of our dataset because college records don't extend as far back as county records
 							let alignedData = new Array(timestamps.length - college.data.length).fill(0).concat(college.data.map(week => week.new_cases))
 							
 							return {
 								label: college.data[0].college_name,
 								data: alignedData,
-								backgroundColor: '#f87897',
-								borderColor: '#f87897',
+								backgroundColor: this.palette[index],
+								borderColor: this.palette[index],
 								fill: false
 							}
 						})
