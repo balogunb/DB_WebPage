@@ -8,7 +8,6 @@
 		<RandomChart :customdata="chart1data" :stack="false"></RandomChart>
 		<h2>Cases (All Counties)</h2>
 		<RandomChart :customdata="chart2data" :displayAverage="true" :displayFloats="true" :stack="true" 	></RandomChart>
-		<v-select label="name2" :clearable="false" :options="counties" v-model="selected" :reduce="value => value.name"> </v-select>
 		<h2>Cases by College in County </h2>
 		<RandomChart :customdata = "chart3data" :stack="false"></RandomChart>
 		<h2>Cases at All Colleges and Total Cases</h2>
