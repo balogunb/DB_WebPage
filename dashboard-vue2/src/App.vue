@@ -92,11 +92,14 @@ export default {
 		}
 	},
 	mounted () {
+		this.$http.get('http://139.147.9.191:80/colleges').then(response => {
+			this.palette = randomColor({seed: 10, count: response.data.length})
+		})
 		this.$http.get('http://139.147.9.191:80/counties').then(response => {
 			this.counties = response.data
 			this.countyPops = Object.assign({}, ...response.data.map(county => ({[county.name]: county.population})))
 			this.selected = response.data[0].name //watchers load county-specific data into charts 1 & 3 for this default value
-			this.palette = randomColor({count: this.counties.length, seed: 42})
+			
 
 			let countyRequests = response.data.map((county) => this.$http.get('http://139.147.9.191:80/countydata', {params: {county_name: county.name}}))
 			this.$http.all(countyRequests).then(counties => {
