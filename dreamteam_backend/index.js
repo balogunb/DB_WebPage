@@ -8,9 +8,15 @@ const express = require('express');
 */
 const app = express(); 
 const Pool = require('pg').Pool; 
+const path = __dirname + '/views/';
 
+app.use(express.static(path));
 
- const pool = new Pool({
+app.get('/', function (req,res){
+  res.sendFile(path + "index.html");
+});
+
+const pool = new Pool({
 	user: "balogunb",
 	host: "localhost",
 	password: "{Ofyers8",
@@ -70,6 +76,22 @@ app.get('/colleges', (req, res, next) => {
             res.send(data.rows); 
         }) 
 })
+
+
+app.get('/valleydata', (req, res, next) => { 
+
+    let queryStr = `
+                select valley_cases.date, new_cases, sum from valley_cases JOIN (select date, sum(new_cases) OVER (ORDER BY date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) FROM valley_cases) AS valley_cumulative ON valley_cases.date = valley_cumulative.date;`  
+    pool.query(queryStr) 
+        .then(data => { 
+            console.log(data.rows); 
+            res.send(data.rows); 
+        }) 
+})
+
+
+
+
 
 app.get('/allcountydata', (req, res, next) => { 
 
