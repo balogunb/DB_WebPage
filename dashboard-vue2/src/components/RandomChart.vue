@@ -12,7 +12,7 @@
 		components: {
 			LineChart
 		},
-		props: ['stack', 'customdata', 'displayAverage', 'displayFloats'],
+		props: ['stack', 'customdata', 'displayAverage', 'displayFloats', 'title'],
 		data () {
 			return {
 				datacollection: this.customdata,
@@ -30,6 +30,13 @@
 						yAxes: [{
 							stacked: this.stack
 						}]
+					},
+					title: {
+						display: true,
+						text: this.title,
+						fontSize: 20,
+						fontColor: 'black'
+						
 					}
 				}
 			}
