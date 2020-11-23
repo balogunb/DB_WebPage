@@ -116,19 +116,23 @@ export default {
 				})
 				console.log(countyIncidenceDatasets)
 
-				this.chart2data = {
-					labels: timestamps,
-					datasets: countyIncidenceDatasets
-				}
 
 				let valleyTotalCases = []
+				let valleyTotalIncidence = []
 				let total = 0
+				let populationTotal = 0
+
+				for(let i = 0; i < this.countyPops.length; i++){
+					populationTotal += this.countyPops[i];
+				}
+
 				for (let i = 0; i < counties[0].data.length; i++){
 					total = 0
 					for (const county of counties){
 						total += county.data[i].new_cases
 					}
 					valleyTotalCases.push(total)
+					valleyTotalIncidence.push((total / populationTotal) * 1000)
 				}
 				let valleyTotalsDataset = {
 					label: "Lehigh Valley Cases",
@@ -136,6 +140,20 @@ export default {
 					backgroundColor: '#f27997',
 					borderColor: '#f27997',
 					fill: false
+				}
+				let valleyIncidenceDataset = {
+					label: "Lehigh Valley Incidence",
+					data: valleyTotalIncidence,
+					backgroundColor: '#f27997',
+					borderColor: '#f27997',
+					fill: false
+				}
+
+				countyIncidenceDatasets.push(valleyIncidenceDataset)
+
+				this.chart2data = {
+					labels: timestamps,
+					datasets: countyIncidenceDatasets
 				}
 
 				this.$http.get('http://139.147.9.191:80/colleges').then(response_colleges => {
