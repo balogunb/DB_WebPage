@@ -93,7 +93,7 @@ export default {
 	},
 	mounted () {
 		this.$http.get('http://139.147.9.191:80/colleges').then(response => {
-			this.palette = randomColor({seed: 10, count: response.data.length})
+			this.palette = randomColor({seed: 6493, count: response.data.length})
 		})
 		this.$http.get('http://139.147.9.191:80/counties').then(response => {
 			this.counties = response.data
