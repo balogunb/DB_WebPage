@@ -3,15 +3,11 @@
 		<!--<img alt="Vue logo" src="./assets/logo.png">
 		<HelloWorld msg="Welcome to Your Vue.js App"/>-->
 		<h1>DreamTeam Lehigh Valley COVID-19 Dashboard</h1>
-		<h2>Cases and Deaths (County)</h2>
 		<v-select label="name" :clearable="false" :options="counties" v-model="selected" :reduce="value => value.name"> </v-select>
-		<RandomChart :customdata="chart1data" :stack="false"></RandomChart>
-		<h2>Cases (All Counties)</h2>
-		<RandomChart :customdata="chart2data" :displayAverage="false" :displayFloats="true" :stack="false" 	></RandomChart>
-		<h2>Cases by College in County </h2>
-		<RandomChart :customdata = "chart3data" :stack="false"></RandomChart>
-		<h2>Cases at All Colleges and Total Cases</h2>
-		<RandomChart :customdata="chart4data" :stack="false"></RandomChart>
+		<RandomChart :customdata="chart1data" :stack="false" :title="chart1title"></RandomChart>
+		<RandomChart :customdata="chart2data" :displayAverage="false" :displayFloats="true" :stack="false" :title="chart2title"></RandomChart>
+		<RandomChart :customdata = "chart3data" :stack="false" :title="chart3title"></RandomChart>
+		<RandomChart :customdata="chart4data" :stack="false" :title="chart4title"></RandomChart>
 
 	</div>
 </template>
@@ -32,7 +28,11 @@ export default {
 			chart1data: {},
 			chart2data: {},
 			chart3data: {},
-			chart4data: {}
+			chart4data: {},
+			chart1title: "Cases and Deaths (County)",
+			chart2title: "Cases (All Counties)",
+			chart3title: "Cases by College in County",
+			chart4title: "Cases at All Colleges and Total Cases"
 		}
 	},
 	watch: {
