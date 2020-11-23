@@ -60,8 +60,8 @@ export default {
 				}
 				this.chart1data = c1data
 
-				this.$http.get('http://139.147.9.191:80/countycolleges', {params: {county_name: newSelected}}).then(response_colleges => {
-					let collegeRequests = response_colleges.data.map(college => this.$http.get('http://139.147.9.191:80/collegedata', {
+				this.$http.get('http://139.147.9.191:80/countycolleges', {params: {county_name: newSelected}}).then(collegesResponse => {
+					let collegeRequests = collegesResponse.data.map(college => this.$http.get('http://139.147.9.191:80/collegedata', {
 						params: {
 							college_name: college.name}
 						}
@@ -93,7 +93,7 @@ export default {
 	},
 	mounted () {
 		this.$http.get('http://139.147.9.191:80/colleges').then(response => {
-			this.palette = randomColor({seed: 6493, count: response.data.length})
+			this.palette = randomColor({seed: 1234, count: response.data.length})
 		})
 		this.$http.get('http://139.147.9.191:80/counties').then(response => {
 			this.counties = response.data
@@ -166,9 +166,9 @@ export default {
 					datasets: countyIncidenceDatasets
 				}
 
-				this.$http.get('http://139.147.9.191:80/colleges').then(response_colleges => {
+				this.$http.get('http://139.147.9.191:80/colleges').then(collegesResponse => {
 
-					let collegeRequests = response_colleges.data.map(college => this.$http.get('http://139.147.9.191:80/collegedata', {params: {college_name: college.name}}))
+					let collegeRequests = collegesResponse.data.map(college => this.$http.get('http://139.147.9.191:80/collegedata', {params: {college_name: college.name}}))
 				
 					this.$http.all(collegeRequests).then( colleges => {
 						//valleyCollegeDatasets contains a dataset for every college in the Lehigh Valley.
