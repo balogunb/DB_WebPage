@@ -3,7 +3,7 @@
 		<!--<img alt="Vue logo" src="./assets/logo.png">
 		<HelloWorld msg="Welcome to Your Vue.js App"/>-->
 		<h1>DreamTeam Lehigh Valley COVID-19 Dashboard</h1>
-		<v-select label="name" :clearable="false" :options="counties" v-model="selected" :reduce="value => value.name"> </v-select>
+		<v-select class="small" label="name" :clearable="false" :options="counties" v-model="selected" :reduce="value => value.name"> </v-select>
 		<RandomChart :customdata="chart1data" :stack="false" :title="chart1title"></RandomChart>
 		<RandomChart :customdata="chart2data" :displayAverage="false" :displayFloats="true" :stack="false" :title="chart2title"></RandomChart>
 		<RandomChart :customdata = "chart3data" :stack="false" :title="chart3title"></RandomChart>
@@ -19,6 +19,9 @@ export default {
 	name: 'App',
 	components: {
 		RandomChart
+	},
+	title() {
+		return "DreamTeam COVID-19 Dashboard"
 	},
 	data () {
 		return {
