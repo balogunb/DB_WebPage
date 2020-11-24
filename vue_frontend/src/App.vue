@@ -3,10 +3,10 @@
 		<!--<img alt="Vue logo" src="./assets/logo.png">
 		<HelloWorld msg="Welcome to Your Vue.js App"/>-->
 		<h1>DreamTeam Lehigh Valley COVID-19 Dashboard</h1>
-		<v-select label="name" :clearable="false" :options="counties" v-model="selected" :reduce="value => value.name"> </v-select>
+		<v-select class="small" label="name" :clearable="false" :options="counties" v-model="selected" :reduce="value => value.name"> </v-select>
 		<RandomChart :customdata="chart1data" :stack="false" :title="chart1title"></RandomChart>
-		<RandomChart :customdata="chart2data" :displayAverage="false" :displayFloats="true" :stack="false" :title="chart2title"></RandomChart>
 		<RandomChart :customdata = "chart3data" :stack="false" :title="chart3title"></RandomChart>
+		<RandomChart :customdata="chart2data" :displayAverage="false" :displayFloats="true" :stack="false" :title="chart2title"></RandomChart>
 		<RandomChart :customdata="chart4data" :stack="false" :title="chart4title"></RandomChart>
 
 	</div>
@@ -20,6 +20,9 @@ export default {
 	components: {
 		RandomChart
 	},
+	title() {
+		return "DreamTeam COVID-19 Dashboard"
+	},
 	data () {
 		return {
 			selected: {}, //this is the object selected by the county drop-down.
@@ -29,10 +32,11 @@ export default {
 			chart2data: {},
 			chart3data: {},
 			chart4data: {},
-			chart1title: "Cases and Deaths (County)",
+			chart1title: "Cases and Deaths (Selected County)",
 			chart2title: "Cases (All Counties)",
-			chart3title: "Cases by College in County",
-			chart4title: "Cases at All Colleges and Total Cases",
+			chart3title: "Cases by College (Selected County)",
+			chart4title: "Cases at All Colleges and Total Cases in Lehigh Valley",
+			paletteSize: {},
 			palette: {}
 		}
 	},
@@ -92,110 +96,105 @@ export default {
 		}
 	},
 	mounted () {
-		this.$http.get('http://139.147.9.191:80/colleges').then(response => {
-			this.palette = randomColor({seed: 1234, count: response.data.length})
-		})
-		this.$http.get('http://139.147.9.191:80/counties').then(response => {
-			this.counties = response.data
-			this.countyPops = Object.assign({}, ...response.data.map(county => ({[county.name]: county.population})))
-			this.selected = response.data[0].name //watchers load county-specific data into charts 1 & 3 for this default value
-			
+		this.$http.get('http://139.147.9.191:80/colleges').then(countResponse => {
+			this.paletteSize = countResponse.data.length
+			console.log(this.paletteSize)
 
-			let countyRequests = response.data.map((county) => this.$http.get('http://139.147.9.191:80/countydata', {params: {county_name: county.name}}))
-			this.$http.all(countyRequests).then(counties => {
-				let timestamps = counties[0].data.map( week => week.date.match(/[^T]*/i)[0])
-				let countyIncidenceDatasets = counties.map((county, index) => {
-					return {
-						label: county.data[0].county_name,
-						data: county.data.map( week => {
-							console.log(week.new_cases / this.countyPops[week.county_name])
-							return (1000 * week.new_cases / this.countyPops[week.county_name])
-						}),
-						backgroundColor: this.palette[index ],
-						borderColor: this.palette[index],
+			this.$http.get('http://139.147.9.191:80/counties').then(response => {
+				this.counties = response.data
+				this.countyPops = Object.assign({}, ...response.data.map(county => ({[county.name]: county.population})))
+				this.selected = response.data[0].name //watchers load county-specific data into charts 1 & 3 for this default value
+				this.paletteSize += response.data.length
+				console.log(this.paletteSize)
+				this.palette = randomColor({seed: 1234, count: this.paletteSize})
+
+				let countyRequests = response.data.map((county) => this.$http.get('http://139.147.9.191:80/countydata', {params: {county_name: county.name}}))
+				this.$http.all(countyRequests).then(counties => {
+					let timestamps = counties[0].data.map( week => week.date.match(/[^T]*/i)[0])
+					let countyIncidenceDatasets = counties.map((county, index) => {
+						return {
+							label: county.data[0].county_name,
+							data: county.data.map( week => {
+								return (1000 * week.new_cases / this.countyPops[week.county_name])
+							}),
+							backgroundColor: this.palette[index ],
+							borderColor: this.palette[index],
+							fill: false
+						}
+
+						
+					})
+
+					let valleyTotalCases = []
+					let valleyTotalIncidence = []
+					let total = 0
+					let populationTotal = 0
+
+					for(var i in this.countyPops){
+						populationTotal += this.countyPops[i]
+					}
+
+					for (let i = 0; i < counties[0].data.length; i++){
+						total = 0
+						for (const county of counties){
+							total += county.data[i].new_cases
+						}
+						valleyTotalCases.push(total)
+						valleyTotalIncidence.push((total / populationTotal) * 1000)
+					}
+					let valleyTotalsDataset = {
+						label: "Lehigh Valley Cases",
+						data: valleyTotalCases,
+						backgroundColor: '#f27997',
+						borderColor: '#f27997',
+						fill: false
+					}
+					let valleyIncidenceDataset = {
+						label: "Lehigh Valley Incidence",
+						data: valleyTotalIncidence,
+						backgroundColor: '#3D2B56',
+						borderColor: '#3D2B56',
 						fill: false
 					}
 
-					
-				})
-				console.log(countyIncidenceDatasets)
+					countyIncidenceDatasets.push(valleyIncidenceDataset)
 
-
-				let valleyTotalCases = []
-				let valleyTotalIncidence = []
-				let total = 0
-				let populationTotal = 0
-				console.log("Population total loop: ")
-				console.log(this.countyPops)
-				console.log("Type thing")
-				console.log(typeof this.countyPops)
-				for(var i in this.countyPops){
-					populationTotal += this.countyPops[i]
-					console.log(this.countyPops[i])
-				}
-				console.log("Population total: ")
-				console.log(populationTotal)
-
-				for (let i = 0; i < counties[0].data.length; i++){
-					total = 0
-					for (const county of counties){
-						total += county.data[i].new_cases
+					this.chart2data = {
+						labels: timestamps,
+						datasets: countyIncidenceDatasets
 					}
-					valleyTotalCases.push(total)
-					valleyTotalIncidence.push((total / populationTotal) * 1000)
-				}
-				let valleyTotalsDataset = {
-					label: "Lehigh Valley Cases",
-					data: valleyTotalCases,
-					backgroundColor: '#f27997',
-					borderColor: '#f27997',
-					fill: false
-				}
-				let valleyIncidenceDataset = {
-					label: "Lehigh Valley Incidence",
-					data: valleyTotalIncidence,
-					backgroundColor: '#3D2B56',
-					borderColor: '#3D2B56',
-					fill: false
-				}
 
-				countyIncidenceDatasets.push(valleyIncidenceDataset)
+					this.$http.get('http://139.147.9.191:80/colleges').then(collegesResponse => {
 
-				this.chart2data = {
-					labels: timestamps,
-					datasets: countyIncidenceDatasets
-				}
-
-				this.$http.get('http://139.147.9.191:80/colleges').then(collegesResponse => {
-
-					let collegeRequests = collegesResponse.data.map(college => this.$http.get('http://139.147.9.191:80/collegedata', {params: {college_name: college.name}}))
-				
-					this.$http.all(collegeRequests).then( colleges => {
-						//valleyCollegeDatasets contains a dataset for every college in the Lehigh Valley.
-						let valleyCollegeDatasets = colleges.map((college, index) => {
-							//we need to pad out the left side of our dataset because college records don't extend as far back as county records
-							let alignedData = new Array(timestamps.length - college.data.length).fill(0).concat(college.data.map(week => week.new_cases))
+						let collegeRequests = collegesResponse.data.map(college => this.$http.get('http://139.147.9.191:80/collegedata', {params: {college_name: college.name}}))
+					
+						this.$http.all(collegeRequests).then( colleges => {
+							//valleyCollegeDatasets contains a dataset for every college in the Lehigh Valley.
+							let valleyCollegeDatasets = colleges.map((college, index) => {
+								//we need to pad out the left side of our dataset because college records don't extend as far back as county records
+								let alignedData = new Array(timestamps.length - college.data.length).fill(0).concat(college.data.map(week => week.new_cases))
+								
+								return {
+									label: college.data[0].college_name,
+									data: alignedData,
+									backgroundColor: this.palette[index],
+									borderColor: this.palette[index],
+									fill: false
+								}
+							})
+							//add the overall county data to countyCollegeDatasets
+							valleyCollegeDatasets.push(valleyTotalsDataset)
 							
-							return {
-								label: college.data[0].college_name,
-								data: alignedData,
-								backgroundColor: this.palette[index],
-								borderColor: this.palette[index],
-								fill: false
+							this.chart4data = {
+								labels: timestamps,
+								datasets: valleyCollegeDatasets
 							}
 						})
-						//add the overall county data to countyCollegeDatasets
-						valleyCollegeDatasets.push(valleyTotalsDataset)
-						
-						this.chart4data = {
-							labels: timestamps,
-							datasets: valleyCollegeDatasets
-						}
 					})
 				})
-
 			})
 		})
+
 
 
 
